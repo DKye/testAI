@@ -1,3 +1,8 @@
+// 输入采集器：监听键盘事件，将用户输入转换为一帧内可消费的请求对象
+// 说明：
+// - 像移动/旋转/硬降/开始/暂停/重开这类按键是瞬时触发，读取后会被清空
+// - 快速下落（ArrowDown）在按住期间保持为激活状态（softDropActive）
+
 export class Input {
   constructor(targetEl) {
     this.target = targetEl || window;
@@ -14,6 +19,7 @@ export class Input {
     this._onKeyDown = this.onKeyDown.bind(this);
     this._onKeyUp = this.onKeyUp.bind(this);
 
+    // 使用 passive: false 以便阻止方向键/空格触发页面滚动等默认行为
     window.addEventListener('keydown', this._onKeyDown, { passive: false });
     window.addEventListener('keyup', this._onKeyUp, { passive: false });
   }
@@ -41,9 +47,9 @@ export class Input {
       case 'ArrowDown':
         this.softDropActive = true;
         break;
-      case ' ': // Space
+      case ' ': // 空格（Space）
         this._hardDrop = true;
-        this._start = true;
+        this._start = true; // 空格也可用于开始游戏
         break;
       case 'p':
       case 'P':
@@ -71,6 +77,7 @@ export class Input {
     }
   }
 
+  // 将当前帧累积到的输入请求打包返回，同时重置瞬时输入标志
   consume() {
     const req = {
       moveLeft: this._moveLeft,
