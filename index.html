@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tetris</title>
+    <link rel="stylesheet" href="/src/styles.css" />
+  </head>
+  <body>
+    <main id="app" class="app" aria-label="Tetris game" tabindex="0">
+      <h1 class="visually-hidden">Tetris</h1>
+      <div class="content">
+        <section class="game-section">
+          <div class="game-wrapper" aria-label="Tetris playfield container">
+            <canvas id="game-canvas" aria-label="Tetris playfield" role="img"></canvas>
+            <div id="overlay" class="overlay" aria-live="polite"></div>
+          </div>
+        </section>
+        <aside class="panel" aria-label="Game info panel">
+          <div class="panel-section">
+            <h2>Next</h2>
+            <canvas id="next-canvas" width="120" height="120" aria-label="Next piece preview" role="img"></canvas>
+          </div>
+          <div class="panel-section stats" aria-live="polite">
+            <div class="stat"><span>Score</span> <strong id="score">0</strong></div>
+            <div class="stat"><span>Lines</span> <strong id="lines">0</strong></div>
+            <div class="stat"><span>Level</span> <strong id="level">1</strong></div>
+            <div class="stat"><span>Best</span> <strong id="best">0</strong></div>
+          </div>
+          <div class="panel-section">
+            <h2>Controls</h2>
+            <ul class="controls">
+              <li><kbd>←</kbd> <kbd>→</kbd> Move</li>
+              <li><kbd>↑</kbd> Rotate</li>
+              <li><kbd>↓</kbd> Soft Drop</li>
+              <li><kbd>Space</kbd> Hard Drop</li>
+              <li><kbd>P</kbd> Pause/Resume</li>
+              <li><kbd>R</kbd> Restart</li>
+            </ul>
+          </div>
+        </aside>
+      </div>
+    </main>
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>
