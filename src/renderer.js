@@ -1,3 +1,8 @@
+// Canvas 渲染器：负责画布尺寸自适应、网格绘制、棋盘与方块渲染、幽灵影（ghost）与“下一块”预览
+// 说明：
+// - 使用 devicePixelRatio 提升高清屏显示效果
+// - 根据画布尺寸计算每格像素（tile），确保 10×20 棋盘在容器内等比居中
+
 import { CONFIG } from './game.js'
 
 export class Renderer {
@@ -14,6 +19,7 @@ export class Renderer {
     window.addEventListener('resize', () => this.resize());
   }
 
+  // 依据容器 CSS 尺寸与设备像素比，更新实际像素大小
   resize() {
     this.pixelRatio = Math.max(1, Math.floor(window.devicePixelRatio || 1));
 
@@ -34,6 +40,7 @@ export class Renderer {
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
   }
 
+  // 绘制背景网格，仅作视觉参考
   drawGrid(tile, cols, rows, offsetY) {
     const { ctx, canvas } = this;
     ctx.save();
@@ -62,6 +69,7 @@ export class Renderer {
     ctx.restore();
   }
 
+  // 绘制单个方格（带顶部高光）
   drawCell(x, y, tile, color, originX, originY) {
     const { ctx } = this;
     const px = originX + x * tile;
@@ -72,6 +80,12 @@ export class Renderer {
     ctx.fillRect(px, py, tile, Math.max(1, tile * 0.18));
   }
 
+  // 渲染主棋盘：
+  // - 背景与网格
+  // - 已锁定的方块
+  // - 当前活动方块及其“幽灵影”（预览其硬降落点）
+  // - 状态遮罩（暂停/开始/结束时加深背景）
+  // - 右侧预览
   draw(game) {
     const cols = CONFIG.COLS;
     const rows = CONFIG.VISIBLE_ROWS;
@@ -105,7 +119,7 @@ export class Renderer {
       const { x, y, shape, type } = game.current;
       const color = CONFIG.COLORS[type];
 
-      // ghost
+      // 幽灵影（ghost）：从当前 y 开始往下推到碰撞前一格
       let gy = y;
       while (!game.collides(game.current, 0, gy - y + 1)) {
         gy += 1;
@@ -123,7 +137,7 @@ export class Renderer {
         }
       }
 
-      // piece
+      // 当前活动方块
       for (let yy = 0; yy < shape.length; yy++) {
         for (let xx = 0; xx < shape[yy].length; xx++) {
           if (!shape[yy][xx]) continue;
@@ -144,6 +158,7 @@ export class Renderer {
     this.drawPreview(game);
   }
 
+  // 绘制“下一块”预览区域
   drawPreview(game) {
     const ctx = this.pctx;
     const w = this.previewCanvas.width;

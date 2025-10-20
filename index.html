@@ -1,41 +1,42 @@
 <!doctype html>
-<html lang="en">
+<html lang="zh-CN">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Tetris</title>
+    <title>俄罗斯方块</title>
     <link rel="stylesheet" href="/src/styles.css" />
   </head>
   <body>
-    <main id="app" class="app" aria-label="Tetris game" tabindex="0">
-      <h1 class="visually-hidden">Tetris</h1>
+    <main id="app" class="app" aria-label="俄罗斯方块游戏" tabindex="0">
+      <h1 class="visually-hidden">俄罗斯方块</h1>
       <div class="content">
         <section class="game-section">
-          <div class="game-wrapper" aria-label="Tetris playfield container">
-            <canvas id="game-canvas" aria-label="Tetris playfield" role="img"></canvas>
+          <div class="game-wrapper" aria-label="俄罗斯方块棋盘容器">
+            <canvas id="game-canvas" aria-label="俄罗斯方块棋盘" role="img"></canvas>
             <div id="overlay" class="overlay" aria-live="polite"></div>
           </div>
         </section>
-        <aside class="panel" aria-label="Game info panel">
+        <aside class="panel" aria-label="游戏信息面板">
           <div class="panel-section">
-            <h2>Next</h2>
-            <canvas id="next-canvas" width="120" height="120" aria-label="Next piece preview" role="img"></canvas>
+            <h2>下一个</h2>
+            <canvas id="next-canvas" width="120" height="120" aria-label="下一个方块预览" role="img"></canvas>
           </div>
           <div class="panel-section stats" aria-live="polite">
-            <div class="stat"><span>Score</span> <strong id="score">0</strong></div>
-            <div class="stat"><span>Lines</span> <strong id="lines">0</strong></div>
-            <div class="stat"><span>Level</span> <strong id="level">1</strong></div>
-            <div class="stat"><span>Best</span> <strong id="best">0</strong></div>
+            <div class="stat"><span>分数</span> <strong id="score">0</strong></div>
+            <div class="stat"><span>行数</span> <strong id="lines">0</strong></div>
+            <div class="stat"><span>等级</span> <strong id="level">1</strong></div>
+            <div class="stat"><span>最高分</span> <strong id="best">0</strong></div>
           </div>
           <div class="panel-section">
-            <h2>Controls</h2>
+            <h2>操作</h2>
             <ul class="controls">
-              <li><kbd>←</kbd> <kbd>→</kbd> Move</li>
-              <li><kbd>↑</kbd> Rotate</li>
-              <li><kbd>↓</kbd> Soft Drop</li>
-              <li><kbd>Space</kbd> Hard Drop</li>
-              <li><kbd>P</kbd> Pause/Resume</li>
-              <li><kbd>R</kbd> Restart</li>
+              <li><kbd>←</kbd> <kbd>→</kbd> 左右移动</li>
+              <li><kbd>↑</kbd> 旋转</li>
+              <li><kbd>↓</kbd> 快速下落</li>
+              <li><kbd>空格</kbd> 硬降</li>
+              <li><kbd>回车</kbd> / <kbd>空格</kbd> 开始</li>
+              <li><kbd>P</kbd> 暂停/继续</li>
+              <li><kbd>R</kbd> 重开</li>
             </ul>
           </div>
         </aside>
